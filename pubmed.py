@@ -11,15 +11,15 @@ class PubMedAPI:
 
     def get_pmids(self, search_term):
         results = []
-        # starting from a points and trying to fetch data in chunks of 100 years
+        # starting from a points and trying to fetch data in chunks of 100 years for next 5 years
 
-        for i in range(5):
+        for i in range(5, 6):
             start_date = Params.__BASE_MIN_DATE__ + relativedelta(years=i * 100)
             end_date = Params.__BASE_MIN_DATE__ + relativedelta(years=(i + 1) * 100)
 
             params = Params(search_term, self.__RET_MAX__, start_date, end_date)
 
-
+            print(self.__api.get_record_count(params))
 
         # self.__api.get_response()
 
