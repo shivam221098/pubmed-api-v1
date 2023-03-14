@@ -1,29 +1,43 @@
+import time
 from api import API, Params
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
 class PubMedAPI:
-    __RET_MAX__ = 10_00_000
-
     def __init__(self):
         self.__api = API()
+        self.__results = []
 
-    def get_pmids(self, search_term):
-        results = []
-        # starting from a points and trying to fetch data in chunks of 100 years for next 5 years
+    @property
+    def api(self):
+        return self.__api
 
-        for i in range(5, 6):
-            start_date = Params.__BASE_MIN_DATE__ + relativedelta(years=i * 100)
-            end_date = Params.__BASE_MIN_DATE__ + relativedelta(years=(i + 1) * 100)
+    def extract(self, term):
+        param = Params(term)
+        return self.get_pmids(param)
 
-            params = Params(search_term, self.__RET_MAX__, start_date, end_date)
+    def get_pmids(self, param: Params, start=1):
+        result = self.api.get_response(param)
+        if result.record_count <= len(result):
+            return result
 
-            print(self.__api.get_record_count(params))
+        maxi = max(result.pmids)
 
-        # self.__api.get_response()
+        param.uid_start = start
+        param.uid_end = (start + maxi) // 2
+        left = self.get_pmids(param, start)
+
+        param.uid_start = (start + maxi) // 2
+        param.uid_end = maxi
+        right = self.get_pmids(param, param.uid_start)
+
+        return left + right
 
 
 if __name__ == '__main__':
+    start = time.time()
     p = PubMedAPI()
-    print(p.get_pmids("Hello"))
+    e = p.extract('"parkinson\'s disease"')
+    print(e.pmids, e.record_count, len(e.pmids))
+    print(f"Time Taken: {time.time() - start}")
