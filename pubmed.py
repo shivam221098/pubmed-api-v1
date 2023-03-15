@@ -15,6 +15,7 @@ class PubMedAPI:
         return self.get_pmids(param)
 
     def get_pmids(self, param: Params, start_=1):
+        """fetches PMIDs recursively"""
         result = self.api.get_response(param)
         if result.record_count <= len(result):
             return result
@@ -34,6 +35,7 @@ class PubMedAPI:
         return left + right
 
     def close(self):
+        """closes the connection with API"""
         self.api.close()
 
 
