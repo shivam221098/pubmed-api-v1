@@ -51,3 +51,22 @@ The above process takes only `41 Seconds` for `106K` PMIDs.
 
 #### The edirect actually uses the PubMed API to get the results, but how it is able to get the results from PubMed API if it is using the same API? 🤔
 #### Actually it uses the same above concept to get the results from API. 🎉
+
+
+# Usage
+### To get PMIDs for a search string
+```python
+from pubmed import PubMedAPI
+
+
+pa = PubMedAPI()  # instantiate once and use it for n number of search terms
+search_terms = [
+    '"parkinson\'s disease"',
+    '"human immunodeficiency virus (hiv)"'
+]
+
+for term in search_terms:
+    result = pa.extract(term)  # result will the object of ResultSet()
+    print(result.pmids)  # will return list of PMIDs (list)
+    print(result.record_count)  # will return number if PMIDs (int)
+```
