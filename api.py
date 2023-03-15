@@ -101,10 +101,19 @@ class API(Session):
                 continue
         return ResultSet()
 
-    def parse_xml(self, content: Dict):
-        pmids = content.get("eSearchResult", {}).get("IdList", {}).get("Id")
-        return ResultSet(pmids, self.get_result_count(content))
+    def parse_xml(self, content: Dict) -> ResultSet:
+        try:
+            pmids = content.get("eSearchResult", {}).get("IdList", {}).get("Id")
+            return ResultSet(pmids, self.get_result_count(content))
+        except AttributeError:
+            return ResultSet()
 
     @staticmethod
-    def get_result_count(content: Dict):
+    def get_result_count(content: Dict) -> int:
         return int(content.get("eSearchResult", {}).get("Count", '0'))
+
+
+if __name__ == '__main__':
+    p = Params('"parkinson\'s disease" 1:1[UID]')
+    a = API()
+    print(a.get_response(p).pmids)
