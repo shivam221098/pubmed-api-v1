@@ -83,6 +83,7 @@ class API(Session):
         super(API, self).__init__()
 
     def get_response(self, params: Params, **kwargs) -> ResultSet:
+        print(params.to_dict())
         # trying first time
         retry_count = 0
         while retry_count < self.__MAX_RETRY__:
@@ -90,6 +91,7 @@ class API(Session):
                 response = self.get(self.__BASE_ESEARCH_URL__, params=params.to_dict(), **kwargs)
                 return self.parse_xml(parse(response.content))
             except (ConnectionError, ConnectTimeout):
+                print("Retrying...")
                 # second retry
                 retry_count += 1
                 continue
