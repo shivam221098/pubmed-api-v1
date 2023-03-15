@@ -78,6 +78,10 @@ class Params:
 class API(Session):
     __BASE_ESEARCH_URL__ = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
     __MAX_RETRY__ = 2  # number of times to retry API if fails to get any data
+    __HEADERS__ = {
+        'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/83.0.4103.97 Safari/537.36"
+    }
 
     def __init__(self):
         super(API, self).__init__()
@@ -87,7 +91,8 @@ class API(Session):
         retry_count = 0
         while retry_count < self.__MAX_RETRY__:
             try:
-                response = self.get(self.__BASE_ESEARCH_URL__, params=params.to_dict(), **kwargs)
+                response = self.get(self.__BASE_ESEARCH_URL__, params=params.to_dict(), headers=self.__HEADERS__,
+                                    **kwargs)
                 return self.parse_xml(parse(response.content))
             except (ConnectionError, ConnectTimeout):
                 print("Retrying...")
