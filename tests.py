@@ -62,7 +62,7 @@ class Tests(unittest.TestCase):
         self.assertGreaterEqual(result.record_count, 47164)
 
     def tearDown(self) -> None:
-        self.pubmed_api = None
+        self.pubmed_api.close()
 
 
 if __name__ == '__main__':

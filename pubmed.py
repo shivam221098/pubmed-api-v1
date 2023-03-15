@@ -33,6 +33,9 @@ class PubMedAPI:
 
         return left + right
 
+    def close(self):
+        self.api.close()
+
 
 if __name__ == '__main__':
     start = time.time()
