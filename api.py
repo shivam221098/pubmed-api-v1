@@ -83,7 +83,6 @@ class API(Session):
         super(API, self).__init__()
 
     def get_response(self, params: Params, **kwargs) -> ResultSet:
-        print(params.to_dict())
         # trying first time
         retry_count = 0
         while retry_count < self.__MAX_RETRY__:
