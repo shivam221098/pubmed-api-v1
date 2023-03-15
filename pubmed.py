@@ -42,7 +42,7 @@ class PubMedAPI:
 if __name__ == '__main__':
     start = time.time()
     p = PubMedAPI()
-    e = p.extract('"parkinson\'s disease"')
-    # print(e.pmids)
+    e = p.extract('("Short Health Scale"[TIAB:~0] OR "SHS"[TIAB:~0]) AND (("Clinical Trial, Phase IV"[PT]) OR("phase 4"[TIAB:~0] OR "phase iv"[TIAB:~0] OR "phase four"[TIAB:~0] OR "phase IIIb"[TIAB:~0] OR "phase 3b/4"[TIAB:~0]))')
+    print(e.pmids)
     print(f"PMID Count: {e.record_count}")
     print(f"Time Taken: {time.time() - start}")

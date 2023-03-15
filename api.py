@@ -10,7 +10,12 @@ class ResultSet:
         if pmids is None:
             pmids = []
 
-        self.__pmids = list(map(int, pmids))
+        if isinstance(pmids, list):
+            self.__pmids = list(map(int, pmids))
+        elif isinstance(pmids, str):
+            self.__pmids = [int(pmids)]
+        else:
+            self.__pmids = pmids
         self.__record_counts = record_count
 
     @property
@@ -102,6 +107,7 @@ class API(Session):
         return ResultSet()
 
     def parse_xml(self, content: Dict) -> ResultSet:
+        print(content)
         try:
             pmids = content.get("eSearchResult", {}).get("IdList", {}).get("Id")
             return ResultSet(pmids, self.get_result_count(content))
