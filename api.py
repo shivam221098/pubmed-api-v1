@@ -107,7 +107,6 @@ class API(Session):
         return ResultSet()
 
     def parse_xml(self, content: Dict) -> ResultSet:
-        print(content)
         try:
             pmids = content.get("eSearchResult", {}).get("IdList", {}).get("Id")
             return ResultSet(pmids, self.get_result_count(content))
