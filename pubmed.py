@@ -18,13 +18,13 @@ class PubMedAPI:
         """fetches PMIDs recursively"""
         result = self.api.get_response(param)
 
+        if result.record_count <= len(result):
+            return result
+
         # take out maximum PMID (only when end_ boundary is not provided in function call)
         if not end_:
             max_pmid = max(result.pmids)
             end_ = max_pmid
-
-        if result.record_count <= len(result):
-            return result
 
         # divide the PMID into two halves and run API for each half
         param.uid_start = start_
