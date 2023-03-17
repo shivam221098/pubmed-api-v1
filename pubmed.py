@@ -14,23 +14,26 @@ class PubMedAPI:
         param = Params(term)  # setting up params
         return self.get_pmids(param)
 
-    def get_pmids(self, param: Params, start_=1):
+    def get_pmids(self, param: Params, start_=1, end_=None):
         """fetches PMIDs recursively"""
         result = self.api.get_response(param)
+
+        # take out maximum PMID (only when end_ boundary is not provided in function call)
+        if not end_:
+            max_pmid = max(result.pmids)
+            end_ = max_pmid
+
         if result.record_count <= len(result):
             return result
 
-        # take out maximum PMID
-        max_pmid = max(result.pmids)
-
         # divide the PMID into two halves and run API for each half
         param.uid_start = start_
-        param.uid_end = (start_ + max_pmid) // 2
-        left = self.get_pmids(param, start_)
+        param.uid_end = (start_ + end_) // 2
+        left = self.get_pmids(param, start_, param.uid_end)
 
-        param.uid_start = (start_ + max_pmid) // 2
-        param.uid_end = max_pmid
-        right = self.get_pmids(param, param.uid_start)
+        param.uid_start = (start_ + end_) // 2
+        param.uid_end = end_
+        right = self.get_pmids(param, param.uid_start, param.uid_end)
 
         return left + right
 
@@ -42,7 +45,7 @@ class PubMedAPI:
 if __name__ == '__main__':
     start = time.time()
     p = PubMedAPI()
-    e = p.extract('("Short Health Scale"[TIAB:~0] OR "SHS"[TIAB:~0]) AND (("Clinical Trial, Phase IV"[PT]) OR("phase 4"[TIAB:~0] OR "phase iv"[TIAB:~0] OR "phase four"[TIAB:~0] OR "phase IIIb"[TIAB:~0] OR "phase 3b/4"[TIAB:~0]))')
-    print(e.pmids)
+    e = p.extract('( "Glucocorticoids"[MeSH] OR "Corticosteroids"[TIAB] OR "hydrocortisone"[TIAB] OR "dexamethasone"[TIAB] OR "prednisone"[TIAB] OR "cortisone"[TIAB] OR "Corticosteroid"[TIAB] OR "Deltasone"[TIAB] OR "Prednisone"[TIAB] OR "Entocort EC"[TIAB:~0] OR "Budesonide"[TIAB] OR "Cortef"[TIAB] OR "Hydrocortisone"[TIAB])')
+    # print(e.pmids)
     print(f"PMID Count: {e.record_count}")
     print(f"Time Taken: {time.time() - start}")
