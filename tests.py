@@ -61,6 +61,22 @@ class Tests(unittest.TestCase):
         result = self.pubmed_api.extract(search_string)
         self.assertGreaterEqual(result.record_count, 47164)
 
+    def test_search_string_complex_string_more_than_10k(self):
+        """
+        search_string: ( "Glucocorticoids"[MeSH] OR "Corticosteroids"[TIAB] OR "hydrocortisone"[TIAB] OR
+        "dexamethasone"[TIAB] OR "prednisone"[TIAB] OR "cortisone"[TIAB] OR "Corticosteroid"[TIAB] OR "Deltasone"[
+        TIAB] OR "Prednisone"[TIAB] OR "Entocort EC"[TIAB:~0] OR "Budesonide"[TIAB] OR "Cortef"[TIAB] OR
+        "Hydrocortisone"[TIAB])
+        expected_pmid_count: >= 285985
+        :return: None
+        """
+        search_string = '( "Glucocorticoids"[MeSH] OR "Corticosteroids"[TIAB] OR "hydrocortisone"[TIAB] OR ' \
+                        '"dexamethasone"[TIAB] OR "prednisone"[TIAB] OR "cortisone"[TIAB] OR "Corticosteroid"[TIAB] ' \
+                        'OR "Deltasone"[TIAB] OR "Prednisone"[TIAB] OR "Entocort EC"[TIAB:~0] OR "Budesonide"[TIAB] ' \
+                        'OR "Cortef"[TIAB] OR "Hydrocortisone"[TIAB])'
+        result = self.pubmed_api.extract(search_string)
+        self.assertGreaterEqual(result.record_count, 285985)
+
     def tearDown(self) -> None:
         self.pubmed_api.close()
 
