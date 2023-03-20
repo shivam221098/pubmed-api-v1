@@ -38,6 +38,9 @@ class ResultSet:
         self.record_count += other.record_count
         return self
 
+    def __str__(self):
+        return f"Count: {self.record_count}, PMID Count: {len(self.pmids)}"
+
 
 class Params:
     def __init__(
