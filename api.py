@@ -71,7 +71,8 @@ class Params:
             return {
                 "term": self.__term,
                 "retmax": 9999,
-                "retstart": 0
+                "retstart": 0,
+                "sort": "pub_date"
             }
         return {
             "term": self.__term + f" AND {self.uid_start}:{self.uid_end}[UID]",
