@@ -35,7 +35,10 @@ First from `1` to `max_pmid / 2` and second from `max_pmid / 2` to `max_pmid`
 First from `1` to `end / 2` and second from `end / 2` to `end`
 6. Now, change the original search string as follows:
 
-Suppose `max_pmid = 15000`
+Suppose `max_pmid = 15000` or `end = 15000` (`end` is `null` during first API call. It is initialised with `max_pmid / 2` during 1st API call
+and used in all subsequent recursive API calls)
+
+**NOTE: we are only using `max_pmid` in first API call. In all subsequent call we're just making half of `max_pmid` again and again.**
 
 Suppose our search string is `"human immunodeficiency virus (hiv)"`, so, two new search strings will be
 `"human immunodeficiency virus (hiv)" AND 1:7500[UID]` and `"human immunodeficiency virus (hiv)" AND 7500:15000[UID]`
