@@ -70,6 +70,8 @@ from pubmed import PubMedAPI
 
 
 pa = PubMedAPI()  # instantiate once and use it for n number of search terms
+# pa.__PUBMED_LIMIT__ = 100_000  # update with new pubmed limit
+
 search_terms = [
     '"parkinson\'s disease"',
     '"human immunodeficiency virus (hiv)"'

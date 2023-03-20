@@ -3,6 +3,8 @@ from api import API, Params
 
 
 class PubMedAPI:
+    __PUBMED_LIMIT__ = 10_000
+
     def __init__(self):
         self.__api = API()
 
@@ -18,7 +20,8 @@ class PubMedAPI:
         """fetches PMIDs recursively"""
         result = self.api.get_response(param)
 
-        if result.record_count <= len(result):
+        # if result count is less than pubmed limit
+        if result.record_count < self.__PUBMED_LIMIT__:
             return result
 
         # take out maximum PMID (only when end_ boundary is not provided in function call)
