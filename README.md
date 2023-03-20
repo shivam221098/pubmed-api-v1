@@ -25,19 +25,26 @@ complex to use. Setting up `edirect` in different environment or platform is als
 Instead of using `edirect` or concept of date-ranges, let's divide the search strings results in ranges of PMIDs.
 
 #### Algorithm
-1. Take a usual string and run over PubMed API. It will get some PMIDs and Count of actual PMIDs this search string
-can get from the pubmed db.
-2. The returned results are by default sorted on the basis of most recent articles. In essence, the most recent PMID is
-returned in the very first API call. So, take the maximum PMID as this PMID is the most is most recent.
+1. Take a usual string and run over PubMed API using `sort=pub_date`. It will get some PMIDs and Count of actual PMIDs from the pubmed db.
+2. The returned results are sorted on the basis of most recent articles as we have used `sort=pub_date`. In essence, the most recent PMID is
+returned in the very first API call. So, take the maximum PMID from the batch of 10K PMIDs as this PMID is the most is most recent.
 3. If the returned PMIDs count (counted PMIDs from response) <= actual counts `<Counts>47851</Counts>` mentioned in the API response. Then our first API call is the required result.
-4. If not, then divide the maximum PMID from `Step 2` by `2`. It will give you two halves. 
-First from `1` to `max_pmid / 2` and second from `max_pmid / 2` to `max_pmid`. 
-5. Now, change the original search string as follows:
+4. If not `Step 3` and current call is first API call, then divide the maximum PMID from `Step 2` by `2`. It will give you two halves. 
+First from `1` to `max_pmid / 2` and second from `max_pmid / 2` to `max_pmid`
+5. If not `Step 3` and current call is 2nd, 3rd or so on. API call then divide `end` by 2 and make two halves
+First from `1` to `end / 2` and second from `end / 2` to `end`
+6. Now, change the original search string as follows:
 
 Suppose `max_pmid = 15000`
 
 Suppose our search string is `"human immunodeficiency virus (hiv)"`, so, two new search strings will be
 `"human immunodeficiency virus (hiv)" AND 1:7500[UID]` and `"human immunodeficiency virus (hiv)" AND 7500:15000[UID]`
+For 1st half 
+make `start` = `1`
+     `end` = `7500`
+For 2nd half
+make `start` = `7500`
+     `end` = `15000`
 Now, Run these two string over the API and repeat `Step 3` for each new string.
 
 This way we can grab all PMIDs using API, without shifting to any other new tool.
