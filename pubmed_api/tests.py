@@ -4,7 +4,7 @@ We have PMIDs counts taken on 7th March 2023 (from confluence)
 We are expecting PMIDs counts for each search string which ran on 7th March lesser than or equal to today's date.
 """
 import unittest
-from .pubmed import PubMedAPI
+from pubmed import PubMedAPI
 
 
 class Tests(unittest.TestCase):
