@@ -1,5 +1,5 @@
 import time
-from api import API, Params
+from .api import API, Params
 
 
 class PubMedAPI:
@@ -43,12 +43,3 @@ class PubMedAPI:
     def close(self):
         """closes the connection with API"""
         self.api.close()
-
-
-if __name__ == '__main__':
-    start = time.time()
-    p = PubMedAPI()
-    e = p.extract('( "Glucocorticoids"[MeSH] OR "Corticosteroids"[TIAB] OR "hydrocortisone"[TIAB] OR "dexamethasone"[TIAB] OR "prednisone"[TIAB] OR "cortisone"[TIAB] OR "Corticosteroid"[TIAB] OR "Deltasone"[TIAB] OR "Prednisone"[TIAB] OR "Entocort EC"[TIAB:~0] OR "Budesonide"[TIAB] OR "Cortef"[TIAB] OR "Hydrocortisone"[TIAB])')
-    # print(e.pmids)
-    print(f"PMID Count: {e.record_count}")
-    print(f"Time Taken: {time.time() - start}")

@@ -66,7 +66,7 @@ The above process takes only `41 Seconds` for `106K` PMIDs.
 # Usage
 ### To get PMIDs for a search string
 ```python
-from pubmed import PubMedAPI
+from pubmed_api.pubmed import PubMedAPI
 
 
 pa = PubMedAPI()  # instantiate once and use it for n number of search terms

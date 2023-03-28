@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 
 setuptools.setup(
-    name="pubmed-api",
+    name="pubmed_api",
     version="1.0.0",
     author="Shivam",
     author_email="shivam@visfo.health",
@@ -14,7 +14,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/shivam221098/pubmed-api-v1.git",
-    packages=["pubmed-api"],
+    packages=["pubmed_api"],
     install_requires=[
         "xmltodict",
         "requests"
