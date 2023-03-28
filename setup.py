@@ -7,13 +7,13 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 setuptools.setup(
     name="pubmed_api",
-    version="1.0.0",
+    version="1.1.0",
     author="Shivam",
-    author_email="shivam@visfo.health",
+    author_email="shivam221098@gmail.com",
     description="Runs PubMed search strings over pubmed API using a batch logic",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/shivam221098/pubmed-api-v1.git",
+    url="https://github.com/shivam221098/pubmed-api-v1",
     packages=["pubmed_api"],
     install_requires=[
         "xmltodict",
