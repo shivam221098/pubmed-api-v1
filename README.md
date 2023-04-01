@@ -7,16 +7,6 @@ in results capping against search strings.
 1. `edirect` - edirect is a command-line utility. It provides capabilities of fetching PMIDs against a 
 search string when `esearch` and `efetch` commands are piped together.
 
-# Problems with `edirect`
-1. On the official documentation, it says we can't pull more than 10k PMIDs for the `pubmed` database and
-if we want more than 10k PMIDs, then we have to use `edirect`, because `edirect` has additional logic to batch pubmed 
-results.
-
-2. In my opinion, `edirect` works great, but when it has to be integrated with another app then it becomes 
-complex to use. Setting up `edirect` in different environment or platform is also complex.
-
-3. While running `edirect` on the terminal, it requires some ascii characters to be escaped like `(`.
-
 # Solution #2
 1. Running pubmed API on search strings with some date-ranges. But sometimes even a single day has more than 10k PMIDs
 
