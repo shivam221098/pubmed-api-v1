@@ -27,4 +27,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Tests
       run: |
-        python pubmed_api/tests.py
+        python tests/tests.py
