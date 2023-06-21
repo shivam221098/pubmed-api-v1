@@ -49,9 +49,7 @@ class Params:
             self,
             term: str,
     ):
-        self.__term = f"{term} AND " \
-                      f"({datetime.now().year - self.__YEARS_DIFFERENCE__}/01/01[Date - Create] : " \
-                      f"{datetime.now().year}/12/31[Date - Create])"
+        self.__term = term
         self.__retstart = 0
         self.__uid_start = 1
         self.__uid_end = None
@@ -72,17 +70,28 @@ class Params:
     def uid_end(self, new):
         self.__uid_end = new
 
+    def change_years_difference(self, num_years):
+        """
+        method changes the minimum date from which the PMIDs are fetched
+        :param num_years: new start year
+        :return: None
+        """
+        self.__YEARS_DIFFERENCE__ = num_years
+
     def to_dict(self):
+        term = f"{self.__term} AND " \
+               f"({datetime.now().year - self.__YEARS_DIFFERENCE__}/01/01[Date - Create] : " \
+               f"{datetime.now().year}/12/31[Date - Create])"
         if not self.uid_end:
             # initial call param to get the largest pmid from the corpus
             return {
-                "term": self.__term,
+                "term": term,
                 "retmax": 9999,
                 "retstart": 0,
                 "sort": "pub_date"
             }
         return {
-            "term": self.__term + f" AND ({self.uid_start}:{self.uid_end}[UID])",
+            "term": term + f" AND ({self.uid_start}:{self.uid_end}[UID])",
             "retmax": 9999,
             "retstart": 0
         }

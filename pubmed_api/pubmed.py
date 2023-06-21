@@ -5,8 +5,9 @@ from .api import API, Params
 class PubMedAPI:
     __PUBMED_LIMIT__ = 10_000
 
-    def __init__(self):
+    def __init__(self, years_of_data: int = 500):
         self.__api = API()
+        self.__years_of_data = years_of_data  # how many years of data to be fetched. default is 500 years
 
     @property
     def api(self):
@@ -14,6 +15,7 @@ class PubMedAPI:
 
     def extract(self, term):
         param = Params(term)  # setting up params
+        param.change_years_difference(self.__years_of_data)
         return self.get_pmids(param)
 
     def get_pmids(self, param: Params, start_=1, end_=None):

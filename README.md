@@ -60,6 +60,7 @@ from pubmed_api.pubmed import PubMedAPI
 
 
 pa = PubMedAPI()  # instantiate once and use it for n number of search terms
+# pa = PubMedAPI(10)  # pass any number. This number tells API to fetch only last 10 years of PMIDs
 # pa.__PUBMED_LIMIT__ = 100_000  # update with new pubmed limit
 
 search_terms = [
