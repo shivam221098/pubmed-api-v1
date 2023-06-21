@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 setuptools.setup(
     name="pubmed_api",
-    version="2.0.0",
+    version="2.1.0",
     author="Shivam Singh",
     author_email="shivam221098@gmail.com",
     description="Runs PubMed search strings over pubmed API using a batch logic",
