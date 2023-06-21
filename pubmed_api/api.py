@@ -43,11 +43,15 @@ class ResultSet:
 
 
 class Params:
+    __YEARS_DIFFERENCE__ = 11  # date filter will be applied for last 'n' years
+
     def __init__(
             self,
             term: str,
     ):
-        self.__term = term
+        self.__term = f"{term} AND " \
+                      f"({datetime.now().year - self.__YEARS_DIFFERENCE__}/01/01[Date - Create] : " \
+                      f"{datetime.now().year}/12/31[Date - Create])"
         self.__retstart = 0
         self.__uid_start = 1
         self.__uid_end = None
@@ -78,7 +82,7 @@ class Params:
                 "sort": "pub_date"
             }
         return {
-            "term": self.__term + f" AND {self.uid_start}:{self.uid_end}[UID]",
+            "term": self.__term + f" AND ({self.uid_start}:{self.uid_end}[UID])",
             "retmax": 9999,
             "retstart": 0
         }

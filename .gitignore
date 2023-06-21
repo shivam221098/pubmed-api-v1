@@ -4,3 +4,4 @@ __pycache__
 build
 pubmed_api.egg-info
 dist/
+main.py
