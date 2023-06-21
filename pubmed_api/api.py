@@ -43,7 +43,7 @@ class ResultSet:
 
 
 class Params:
-    __YEARS_DIFFERENCE__ = 11  # date filter will be applied for last 'n' years
+    __YEARS_DIFFERENCE__ = 10  # date filter will be applied for last 'n' years
 
     def __init__(
             self,
