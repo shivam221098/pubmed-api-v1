@@ -1,3 +1,4 @@
+import time
 from typing import Dict, List
 from requests import Session
 from requests.exceptions import ConnectionError, ConnectTimeout
@@ -99,7 +100,7 @@ class Params:
 
 class API(Session):
     __BASE_ESEARCH_URL__ = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
-    __MAX_RETRY__ = 2  # number of times to retry API if fails to get any data
+    __MAX_RETRY__ = 3  # number of times to retry API if fails to get any data
     __HEADERS__ = {
         'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) "
                       "Chrome/83.0.4103.97 Safari/537.36"
@@ -118,6 +119,7 @@ class API(Session):
                 return self.parse_xml(parse(response.content))
             except (ConnectionError, ConnectTimeout):
                 print("Retrying...")
+                time.sleep(30)  # sleep for 30 seconds if the api fails to get the batch pmids
                 # second retry
                 retry_count += 1
                 continue
