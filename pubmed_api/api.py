@@ -114,8 +114,8 @@ class API(Session):
         retry_count = 0
         while retry_count < self.__MAX_RETRY__:
             try:
-                response = self.get(self.__BASE_ESEARCH_URL__, params=params.to_dict(), headers=self.__HEADERS__,
-                                    **kwargs)
+                response = self.post(self.__BASE_ESEARCH_URL__, data=params.to_dict(), headers=self.__HEADERS__,
+                                     **kwargs)
                 return self.parse_xml(parse(response.content))
             except (ConnectionError, ConnectTimeout):
                 print("Retrying...")
